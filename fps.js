@@ -18,12 +18,11 @@ class FPS {
     this.wrap.style.width = this.length + "px";
     this.canvas.height = this.height;
     this.wrap.style.height = this.height + "px";
-    let currentLeft = document.documentElement.clientWidth - 10 - this.length;
     this.wrap.style.top = "10px";
-    this.wrap.style.left = currentLeft + "px";
-    this.x = currentLeft;
+    this.wrap.style.right = "10px";
+    this.x = 10;
     this.y = 10;
-    this.originalX = currentLeft;
+    this.originalX = 10;
     this.originalY = 10;
 
     this.wrap.appendChild(this.canvas);
@@ -62,7 +61,7 @@ class FPS {
     var dragging = false;
 
     this.wrap.onmousedown = function(e) {
-      diffs.x = e.clientX - self.x;
+      diffs.x = window.innerWidth - e.clientX - self.x;
       diffs.y = e.clientY - self.y;
       dragging = true;
       self.playpause();
@@ -82,29 +81,15 @@ class FPS {
 
     document.onmousemove = function(e) {
       if (dragging) {
-        var newY = e.clientY - diffs.y;
-        var newX = e.clientX - diffs.x;
-
-        if (newX <= 0) {
-          newX = 0;
-        } else if (newX + self.length >= window.innerWidth) {
-          newX = window.innerWidth - self.length;
-        }
-
-        if (newY <= 0) {
-          newY = 0;
-        } else if (newY + self.height >= window.innerHeight) {
-          newY = window.innerHeight - self.height;
-        }
-        self.x = newX;
-        self.y = newY;
+        self.x = Math.min(Math.max(window.innerWidth - e.clientX - diffs.x, 0), window.innerWidth - self.length);
+        self.y = Math.min(Math.max(e.clientY - diffs.y, 0), window.innerHeight - self.height);
         self.move();
         return false;
       }
     };
   }
   move() {
-    this.wrap.style.left = this.x + "px";
+    this.wrap.style.right = this.x + "px";
     this.wrap.style.top = this.y + "px";
   }
   playpause() {
@@ -120,7 +105,7 @@ class FPS {
         self.wrap.classList.add("is-hidden");
       } else {
         self.wrap.classList.remove("is-hidden");
-        self.x = self.wrap.offsetLeft;
+        self.x = document.documentElement.clientWidth - self.wrap.offsetLeft - self.length;
         self.y = self.wrap.offsetTop;
         self.loop();
       }
