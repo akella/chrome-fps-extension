@@ -1,35 +1,24 @@
 .fps-extension{
-	position:fixed;
-	/*top:10px;
-	right:10px;*/
-	z-index: 99999;
-}
-.fps-extension span{
-	position: absolute;
-	display: block;
-	left: 0;
-	bottom: -20px;
+  position:fixed;
+  z-index: 99999;
+  border-radius: 6px;
+  overflow: hidden;
 }
 .fps-extension:before{
-	position: absolute;
-	content: "";
-	width: 100%;
-	background: red;
-	height: 1px;
-	top: 40px;
-	left: 0;
-	opacity: .4;
+  position: absolute;
+  content: "";
+  width: 100%;
+  background: red;
+  height: 1px;
+  top: 40px;
+  left: 0;
+  opacity: .4;
 }
 
 .fps-extension canvas{
-	background: linear-gradient(#54b7e3 0,#87f2e2 100%) !important;
-	border-radius: 6px;
-	overflow: hidden;
-	position: static;
-	left: 0;
-	top: 0;
-	margin: 0;
+  background: linear-gradient(#54b7e3 0,#87f2e2 100%) !important;
+  display: block;
 }
 .fps-extension.is-hidden{
-	display: none !important;
+  display: none !important;
 }
